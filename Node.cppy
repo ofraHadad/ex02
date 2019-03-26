@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+
+#include "Node.h"
+
+Node::Node(int x)
+{
+	num=x;
+
+}
+
+Node::Node(){}
+
+int Node::getNum()
+{
+	return num;
+}
+Node* Node::getLeft(){return left;}
+Node* Node::getRight(){return right;}
+void  Node::print()
+{
+cout<< num;
+}
