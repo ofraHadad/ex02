@@ -70,7 +70,7 @@ void Tree:: remove(int x)
 		else if(n->getRight()==NULL)
 		{
 			Node * temp= n->getLeft();
-			   if(root()==n->getNum())
+			if(root()==n->getNum())
                         {
                                 temp->setParent(NULL);
                                 head=temp;
@@ -80,11 +80,11 @@ void Tree:: remove(int x)
 				temp->setParent(n->getParent());
                          	if(n->getParent()->getNum()>n->getNum())
                         	{
-                                	n->getParent()->left=NULL;
+                                	n->getParent()->left=temp;
                         	}
                         	else
                         	{
-                                	n->getParent()->right=NULL;
+                                	n->getParent()->right=temp;
                         	}
 			}
 		}
