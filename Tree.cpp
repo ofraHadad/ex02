@@ -18,7 +18,7 @@ Node* Tree::getRoot()
 
 void Tree:: remove(int x)
 {
-/*
+
 	Node * n= search(x,getRoot());
 
 	if(n==NULL)
@@ -30,43 +30,103 @@ void Tree:: remove(int x)
 
 		if(n->getLeft()==NULL&&n->getRight()==NULL)
 		{
-			n->getParent()->left=NULL;
-			n->getParent()->right=NULL;
+			if(root()==n->getNum())
+			{
+				head=NULL;
+			}
+			else if(n->getParent()->getNum()>n->getNum())
+			{
+				n->getParent()->left=NULL;
+			}
+			else
+			{
+				n->getParent()->right=NULL;
+			}
 		}
+
 
 		else if(n->getLeft()==NULL)
 		{
 			Node * temp= n->getRight();
-			temp->setParent(n->getParent());
-			n->getParent()->right=temp;
+			 if(root()==n->getNum())
+			{
+				temp->setParent(NULL);
+				head=temp;
+			}
+			else
+			{
+				temp->setParent(n->getParent());
+				if(n->getParent()->getNum()>n->getNum())
+                        	{
+                                	n->getParent()->left=temp;
+                        	}
+                        	else
+                        	{
+                                n->getParent()->right=temp;
+                        	}
+			}
 		}
 
 		else if(n->getRight()==NULL)
 		{
 			Node * temp= n->getLeft();
-			temp->setParent(n->getParent());
-                        n->getParent()->left=temp;
+			   if(root()==n->getNum())
+                        {
+                                temp->setParent(NULL);
+                                head=temp;
+                        }
+                        else
+                        {
+				temp->setParent(n->getParent());
+                         	if(n->getParent()->getNum()>n->getNum())
+                        	{
+                                	n->getParent()->left=NULL;
+                        	}
+                        	else
+                        	{
+                                	n->getParent()->right=NULL;
+                        	}
+			}
 		}
 
-		else
+		else//two son
 		{
 			Node * temp= findSon(n->getLeft());
-
-			temp->getParent()->right=NULL;
-			temp->setParent(n->getParent());
-			if(n->getParent()->getNum()>n->getNum())
+			if(temp!=n->getLeft())
 			{
-				
-				n->getParent()->left=temp;
+				temp->getParent()->right= temp->getLeft();
+				if(temp->getLeft()!=NULL)
+				{
+					temp->getLeft()->setParent(temp->getParent());
+				}
+
+				temp->left=n->getLeft();
+				temp->right=n->getRight();
+				temp->getLeft()->setParent(temp);
+				temp->getRight()->setParent(temp);
 			}
-			if(n->getParent()->getNum()< n->getNum())
+			else
+			{
+				temp->right=n->getRight();
+				temp->getRight()->setParent(temp);
+			}
+
+			if(root()==n->getNum())
+                        {
+                                head=temp;
+                        }
+			else if(n->getParent()->getNum()>n->getNum())
+                       	{
+                             	n->getParent()->left=temp;
+                       	}
+                        else
                         {
                                 n->getParent()->right=temp;
                         }
+			temp->setParent(n->getParent());
 		}
 		count--;
-		
-	}*/
+	}
 }
 
 Node * Tree:: findSon(Node * n)
