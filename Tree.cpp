@@ -27,13 +27,13 @@ void Tree :: insert(int x)
 
 		if(newNode->getNum()>x)
 		{
-			newNode->left=new Node(x);
-			newNode->left->setParent(newNode);
+			newNode->setLeft(new Node(x));
+			newNode->getLeft()->setParent(newNode);
 		}
 		else
 		{
-			newNode->right=new Node(x);
-			newNode->right->setParent(newNode);
+			newNode->setRight(new Node(x));
+			newNode->getRight()->setParent(newNode);
 		}
 	}
 }
@@ -57,11 +57,11 @@ void Tree:: remove(int x)
 			}
 			else if(n->getParent()->getNum()>n->getNum())
 			{
-				n->getParent()->left=NULL;
+				n->getParent()->setLeft(NULL);
 			}
 			else
 			{
-				n->getParent()->right=NULL;
+				n->getParent()->setRight(NULL);
 			}
 		}
 
@@ -79,11 +79,11 @@ void Tree:: remove(int x)
 				temp->setParent(n->getParent());
 				if(n->getParent()->getNum()>n->getNum())
                         	{
-                                	n->getParent()->left=temp;
+                                	n->getParent()->setLeft(temp);
                         	}
                         	else
                         	{
-                                n->getParent()->right=temp;
+                                n->getParent()->setRight(temp);
                         	}
 			}
 		}
@@ -101,11 +101,11 @@ void Tree:: remove(int x)
 				temp->setParent(n->getParent());
                          	if(n->getParent()->getNum()>n->getNum())
                         	{
-                                	n->getParent()->left=temp;
+                                	n->getParent()->setLeft(temp);
                         	}
                         	else
                         	{
-                                	n->getParent()->right=temp;
+                                	n->getParent()->setRight(temp);
                         	}
 			}
 		}
@@ -115,20 +115,20 @@ void Tree:: remove(int x)
 			Node * temp= findSon(n->getLeft());
 			if(temp!=n->getLeft())
 			{
-				temp->getParent()->right= temp->getLeft();
+				temp->getParent()->setRight(temp->getLeft());
 				if(temp->getLeft()!=NULL)
 				{
 					temp->getLeft()->setParent(temp->getParent());
 				}
 
-				temp->left=n->getLeft();
-				temp->right=n->getRight();
+				temp->setLeft(n->getLeft());
+				temp->setRight(n->getRight());
 				temp->getLeft()->setParent(temp);
 				temp->getRight()->setParent(temp);
 			}
 			else
 			{
-				temp->right=n->getRight();
+				temp->setRight(n->getRight());
 				temp->getRight()->setParent(temp);
 			}
 
@@ -138,14 +138,15 @@ void Tree:: remove(int x)
                         }
 		else if(n->getParent()->getNum()>n->getNum())
                        	{
-                             	n->getParent()->left=temp;
+                             	n->getParent()->setLeft(temp);
                        	}
                         else
                         {
-                                n->getParent()->right=temp;
+                                n->getParent()->setRight(temp);
                         }
 			temp->setParent(n->getParent());
 		}
+
 		count--;
 		delete n;
 	}
@@ -183,16 +184,12 @@ int Tree :: parent(int x)
 		throw std::out_of_range("No parent");
 
 	}
-	
 	return n->getParent()->getNum();
-	
 }
 
 int Tree :: left(int x)
 {
-	
 	Node * n= search(x,getRoot());
-	
 	if (n==NULL)
 	{
 		throw std::out_of_range("Not exsit");
@@ -218,7 +215,7 @@ int Tree :: right(int x)
         return n->getRight()->getNum();
 }
 
-void Tree :: print()	
+void Tree :: print()
 {
 	printInorder(getRoot());
 	cout<<"\n"<< count;
@@ -244,16 +241,13 @@ Node * Tree:: findSon(Node * n)
 	}
 }
 
-
-
 Node * Tree :: insert(int x, Node * n, Node * p)
 {
 
 	if(n==NULL)
 	{
-		 
 		return p;
-			
+
 	}
 
 	else if(p->getNum()==x)
@@ -289,14 +283,6 @@ void Tree :: printInorder( Node* node)
     /* now recur on right child */
     printInorder(node-> getRight()); 
 }
-
-
-
-
-
-
-
-
 
 
 
