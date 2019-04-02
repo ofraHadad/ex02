@@ -8,9 +8,10 @@ class Node;
 */
 class Tree
 {
-	public:
-	
+public:
+
 	Tree();//defalt constructors head point to NULL
+	~Tree();//delete the tree
 	void insert(int x);//add to the tree the x number ,throws exeption if x already in the tree.
 	void remove(int x);//delete x from the tree, throws exeption if x not in the tree.
 	int size();//return the size of the tree
@@ -20,15 +21,16 @@ class Tree
 	int right(int x);//return the right son of x, throws exeption if x not in the tree or x dont have a right son.
 	void print();// print the tree inorder
 	Node* getRoot();//return head pointer
-	int root();//return the tree root
+	int root();//return the tree root, throws exeption if the tree is empty
 
-	private:
+private:
 	Node* head;//root
 	int count;//size
 	Node * insert(int x,Node* n,Node* p);//find where to insert x
 	void printInorder(Node * n);//print
 	Node * findSon(Node * n);//return a pointer to the previous node of n inorder
 	Node* search(int x,Node *n);//return pointer to x in the tree, return NULL if x is not in the tree
+	void DestroyRecursive(Node * n);//delete the tree
 };
 }
 

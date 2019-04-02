@@ -8,10 +8,7 @@ class Node
 {
 
 public:	
-//	Node *right, *left, *parent;
-//	int num;
 	Node(int x);//constructor
-	Node();
 	int getNum();//return the num
 	Node* getLeft();//return the left pointer
 	Node* getRight();//return the right pointer 
