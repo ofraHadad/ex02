@@ -5,15 +5,39 @@ using namespace std;
 #include "Node.cpp"
 using namespace ariel;
 
+
+///////////////////////////////////////////////////constructors /////////////////////////////////////////////////////////////////////////
 Tree :: Tree()
 {
 	head=NULL;
 	count=0;
 }
 
-Node* Tree::getRoot()
+///////////////////////////////////////////////////////methods ///////////////////////////////////////////////////////////////////////////
+void Tree :: insert(int x)
 {
-	return this -> head;
+	count++;
+	if(getRoot()== NULL)
+	{
+		head=new Node(x);
+	}
+	else
+	{
+		Node *  newNode =insert (x,getRoot(), getRoot());
+		
+		if(newNode->getNum()>x)
+		{
+			
+			newNode->left=new Node(x);
+			newNode->left->setParent(newNode);
+		}
+		else
+		{
+			
+			newNode->right=new Node(x);
+			newNode->right->setParent(newNode);
+		}
+	}
 }
 
 void Tree:: remove(int x)
@@ -115,7 +139,7 @@ void Tree:: remove(int x)
                         {
                                 head=temp;
                         }
-			else if(n->getParent()->getNum()>n->getNum())
+		else if(n->getParent()->getNum()>n->getNum())
                        	{
                              	n->getParent()->left=temp;
                        	}
@@ -129,96 +153,19 @@ void Tree:: remove(int x)
 	}
 }
 
-Node * Tree:: findSon(Node * n)
-{
-	if(n->getRight()==NULL)
-	{
-		return n;
-	}
-	else
-	{
-		return findSon(n->getRight());
-	}
-}
-
-void Tree :: insert(int x)
-{
-	count++;
-	if(getRoot()== NULL)
-	{
-		head=new Node(x);
-	}
-	else
-	{
-		Node *  newNode =insert (x,getRoot(), getRoot());
-		
-		if(newNode->getNum()>x)
-		{
-			
-			newNode->left=new Node(x);
-			newNode->left->setParent(newNode);
-		}
-		else
-		{
-			
-			newNode->right=new Node(x);
-			newNode->right->setParent(newNode);
-		}
-	}
-}
-
-Node * Tree :: insert(int x, Node * n, Node * p)
-{
-
-	if(n==NULL)
-	{
-		 
-		return p;
-			
-	}
-
-	else if(p->getNum()==x)
-	{
-		count--;
-		throw std::out_of_range("The number is already exsit");
-	}
-	else if(p->getNum()>x) 
-	{
-
-		return  insert(x,p->getLeft(),n);
-	}
-	 else
-	{
-		
-		 return insert(x,p->getRight(),n);
-		
-	}
-}
-
-void Tree :: print()	
-{
-	printInorder(getRoot());
-	cout<<"\n"<< count;
-}
-
-void Tree :: printInorder( Node* node) 
-{ 
-    if (node == NULL) 
-        return; 
-  
-    /* first recur on left child */
-    printInorder(node->getLeft()); 
-  
-    /* then print the data of node */
-    cout << node->getNum() << "."; 
-  
-    /* now recur on right child */
-    printInorder(node-> getRight()); 
-}
-
 int Tree::size()
 {
 	return count;
+}
+
+bool Tree:: contains(int x)
+{
+	Node * n= search(x,getRoot());
+	if(n==NULL)
+	{
+		return false;
+	}
+	return true;
 }
 
 int Tree:: root()
@@ -241,16 +188,6 @@ int Tree :: parent(int x)
 	
 	return n->getParent()->getNum();
 	
-}
-
-bool Tree:: contains(int x)
-{
-	Node * n= search(x,getRoot());
-	if(n==NULL)
-	{
-		return false;
-	}
-	return true;
 }
 
 int Tree :: left(int x)
@@ -283,6 +220,88 @@ int Tree :: right(int x)
         return n->getRight()->getNum();
 }
 
+void Tree :: print()	
+{
+	printInorder(getRoot());
+	cout<<"\n"<< count;
+}
+
+////////////////////////////////////////////////////Getters and Setters /////////////////////////////////////////////////////////////
+Node* Tree::getRoot()
+{
+	return this -> head;
+}
+
+
+//////////////////////////////////////////////////////////private /////////////////////////////////////////////////////////////////////
+Node * Tree:: findSon(Node * n)
+{
+	if(n->getRight()==NULL)
+	{
+		return n;
+	}
+	else
+	{
+		return findSon(n->getRight());
+	}
+}
+
+
+
+Node * Tree :: insert(int x, Node * n, Node * p)
+{
+
+	if(n==NULL)
+	{
+		 
+		return p;
+			
+	}
+
+	else if(p->getNum()==x)
+	{
+		count--;
+		throw std::out_of_range("The number is already exsit");
+	}
+	else if(p->getNum()>x) 
+	{
+
+		return  insert(x,p->getLeft(),n);
+	}
+	 else
+	{
+		
+		 return insert(x,p->getRight(),n);
+		
+	}
+}
+
+
+void Tree :: printInorder( Node* node) 
+{ 
+    if (node == NULL) 
+        return; 
+  
+    /* first recur on left child */
+    printInorder(node->getLeft()); 
+  
+    /* then print the data of node */
+    cout << node->getNum() << "."; 
+  
+    /* now recur on right child */
+    printInorder(node-> getRight()); 
+}
+
+
+
+
+
+
+
+
+
+
+
 Node * Tree::search(int x, Node* n)
 {
 	if(n==NULL)
@@ -302,4 +321,3 @@ Node * Tree::search(int x, Node* n)
 		return search(x,n->getRight());
 	}
 }
-
