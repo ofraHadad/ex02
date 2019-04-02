@@ -24,16 +24,14 @@ void Tree :: insert(int x)
 	else
 	{
 		Node *  newNode =insert (x,getRoot(), getRoot());
-		
+
 		if(newNode->getNum()>x)
 		{
-			
 			newNode->left=new Node(x);
 			newNode->left->setParent(newNode);
 		}
 		else
 		{
-			
 			newNode->right=new Node(x);
 			newNode->right->setParent(newNode);
 		}
@@ -51,7 +49,6 @@ void Tree:: remove(int x)
 	}
 	else
 	{
-
 		if(n->getLeft()==NULL&&n->getRight()==NULL)
 		{
 			if(root()==n->getNum())
@@ -150,6 +147,7 @@ void Tree:: remove(int x)
 			temp->setParent(n->getParent());
 		}
 		count--;
+		delete n;
 	}
 }
 
